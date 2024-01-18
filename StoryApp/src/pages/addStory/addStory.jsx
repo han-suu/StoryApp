@@ -1,6 +1,8 @@
 import './addStory.css'
 import { useState } from "react"
 import { Link,useNavigate } from "react-router-dom";
+import axios from 'axios';
+
 function AddStory() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -20,14 +22,30 @@ function AddStory() {
     [name]: value,
     });
   };
+  const handleInputImage = (e) => {
+    // const { name, files[0] } = e.target;
+    setFormData({
+      ...formData,
+      coverImages: e.target.files[0],
+      });
+    };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Access form data from the state object
     console.log(formData);
     // Perform further actions, such as sending data to a server
-    navigate("/"); 
-  };
+    // navigate("/"); 
+    await axios.post('http://localhost:3000/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }).then(function (response) {
+        console.log(response.data);
+      }).catch(function (error) {
+        console.log(error);
+      });
+    };
 
   const handleCancel = ()=>{
     console.log("Are you sure you want to cancel adding the story without saving the data?")
@@ -78,7 +96,7 @@ function AddStory() {
                 <label>Cover Images</label>
                 <input type="file" name="coverImages" id="" 
                 value={formData.file}
-                onChange={handleInputChange}
+                onChange={handleInputImage}
                 />
 
                 <label>Status</label>
