@@ -5,9 +5,9 @@ const app = express();
 const prisma = new PrismaClient();
 const multer = require('multer');
 const bodyParser = require('body-parser');
-
+const cors = require('cors')
 app.use(express.json());
-
+app.use(cors())
 // Set up Multer for file upload
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -51,6 +51,10 @@ app.post('/upload', upload.single('coverImages'), async (req, res) => {
   }
 });
 
+app.get('/stories', async (req, res) => {
+  const stories = await prisma.story.findMany();
+  res.json(stories);
+});
 
 app.post('/posts', async (req, res) => {
   const { title, content } = req.body;
