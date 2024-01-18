@@ -4,9 +4,8 @@ function Home() {
 
   return (
     <div>
-        <h1>
-            Story List
-            <input type="text"  />
+        <h1>Story List</h1>
+        <input type="text"  />
             <button type="button">Filter</button>
             
             <Link to={`/addStory`} className='nav-link'>Add Story</Link>
@@ -36,7 +35,6 @@ function Home() {
                     <td></td>
                 </tr>
             </table>
-        </h1>
     </div>
   )
 }
