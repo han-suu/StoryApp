@@ -17,6 +17,17 @@ function Home() {
       fetchData()
       
     }, [])
+    const DeleteStory = async (id)=>{
+        
+        await axios.delete(`http://localhost:3000/stories/${id}`, {
+        }).then(function (response) {
+            console.log(response.data);
+        }).catch(function (error) {
+            console.log(error);
+        })
+        // REFRESH PAGE, CHANGE THIS TO ONLY REMOVE ITEM LATER
+        window.location.reload(false);
+    }
     return (
         <div>
             <h1>Story List</h1>
@@ -42,7 +53,10 @@ function Home() {
                             <td>{story.category}</td>
                             <td>{story.tags}</td>
                             <td>{story.status}</td>
-                            <td><Link to={`/editStory`} state={{ story: story }} className='nav-link'>Edit</Link><button>Del</button></td>
+                            <td>
+                                <Link to={`/editStory`} state={{ story: story }} className='nav-link'>Edit</Link>
+                                <button onClick={()=>DeleteStory(story.id)}>Del</button>
+                            </td>
                             </tr>
                         )
                     })}

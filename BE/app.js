@@ -95,6 +95,14 @@ app.put('/stories/:id', upload.single('coverImages'), async (req, res) => {
   
   
 });
+
+app.delete('/stories/:id', async (req, res) => {
+  const postId = parseInt(req.params.id);
+  await prisma.story.delete({
+    where: { id: postId },
+  });
+  res.json({ message: 'Post deleted successfully' });
+});
 // =============================
 
 app.post('/posts', async (req, res) => {
