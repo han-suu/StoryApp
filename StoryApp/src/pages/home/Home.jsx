@@ -10,6 +10,7 @@ function Home() {
             
             <Link to={`/addStory`} className='nav-link'>Add Story</Link>
             <table>
+            <tbody>
                 <tr>
                     <th>Title</th>
                     <th>Author</th>
@@ -34,6 +35,7 @@ function Home() {
                     <td></td>
                     <td></td>
                 </tr>
+            </tbody>
             </table>
     </div>
   )

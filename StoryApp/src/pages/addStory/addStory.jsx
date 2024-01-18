@@ -1,34 +1,41 @@
 import './addStory.css'
 import { useState } from "react"
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 function AddStory() {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    title: '',
+    author: '',
+    synopsis: '',
+    category: '',
+    tags: '',
+    coverImages: null,
+    status: '',
+  });
 
-    const [formData, setFormData] = useState({
-        title: '',
-        author: '',
-        synopsis: '',
-        category: '',
-        tags: '',
-        coverImages: '',
-        status: '',
-      });
+  const handleInputChange = (e) => {
+  const { name, value } = e.target;
+  setFormData({
+    ...formData,
+    [name]: value,
+    });
+  };
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-          ...formData,
-          [name]: value,
-        });
-      };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Access form data from the state object
+    console.log(formData);
+    // Perform further actions, such as sending data to a server
+    navigate("/"); 
+  };
 
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        // Access form data from the state object
-        console.log(formData);
-        // Perform further actions, such as sending data to a server
-      };
+  const handleCancel = ()=>{
+    console.log("Are you sure you want to cancel adding the story without saving the data?")
+    navigate("/"); 
+  }
 
-      const chapters = [{id:'1', title:'Builan Ku', updated:'13 December 2023'}, {id:'2', title:'Toko Loak', updated:'11 January 2021'}]
+  const chapters = [{id:'1', title:'Builan Ku', updated:'13 December 2023'}, {id:'2', title:'Toko Loak', updated:'11 January 2021'}]
+
   return (
     <div>
         <h1>Add Story</h1>
@@ -83,33 +90,34 @@ function AddStory() {
                     <option value="Publish">Publish</option>
                     <option value="Draft">Draft</option>
                 </select>
-                
-                <input type="submit" value="Submit"/>
+                <div className='chapterList'>
+                    
+                    <Link to={`/addChapter`} className='nav-link'>Add Chapter</Link>
+                    <table>
+                    <tbody>
+                        <tr>
+                            <th>Title</th>
+                            <th>Last Updated</th>
+                            <th>Action</th>
+                        </tr>
+                        {chapters.map(chapter=>{
+                            return(
+                                <tr key={chapter.id}>
+                                <td>{chapter.title}</td>
+                                <td>{chapter.updated}</td>
+                                <td><button>Edit</button><button>Del</button></td>
+                                </tr>
+                            )
+                        })}
+                        
+                    </tbody>
+                    </table>
+                </div>
+                <button type='button' onClick={handleCancel}>Cancel</button>
+                <input type="submit" value="Save"/>
             </form>
 
-            <div className='chapterList'>
-                 
-                <Link to={`/addChapter`} className='nav-link'>Add Chapter</Link>
-                <table>
-                <tbody>
-                    <tr>
-                        <th>Title</th>
-                        <th>Last Updated</th>
-                        <th>Action</th>
-                    </tr>
-                    {chapters.map(chapter=>{
-                        return(
-                            <tr key={chapter.id}>
-                            <td>{chapter.title}</td>
-                            <td>{chapter.updated}</td>
-                            <td><button>Edit</button><button>Del</button></td>
-                            </tr>
-                        )
-                    })}
-                    
-                </tbody>
-                </table>
-            </div>
+            
     </div>
   )
 }
