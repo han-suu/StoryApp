@@ -56,6 +56,47 @@ app.get('/stories', async (req, res) => {
   res.json(stories);
 });
 
+app.put('/stories/:id', upload.single('coverImages'), async (req, res) => {
+  const postId = parseInt(req.params.id);
+  const { title, author, synopsis, category,tags,status } = req.body;
+
+  // REFACTOR THIS LATER
+  if (req.file!=undefined) {
+    coverImage = req.file.filename;
+    const updatedStory = await prisma.story.update({
+      where: { id: postId },
+      data: {
+        title: title,
+        author: author,
+        synopsis: synopsis,
+        category:category,
+        tags:tags,
+        coverImages: coverImage,
+        status:status
+      },
+    });
+    res.json(updatedStory);
+  }else{
+    const updatedStory = await prisma.story.update({
+      where: { id: postId },
+      data: {
+        title: title,
+        author: author,
+        synopsis: synopsis,
+        category:category,
+        tags:tags,
+        // coverImages: coverImage,
+        status:status
+      },
+    });
+    res.json(updatedStory);
+  }
+
+  
+  
+});
+// =============================
+
 app.post('/posts', async (req, res) => {
   const { title, content } = req.body;
   const post = await prisma.post.create({

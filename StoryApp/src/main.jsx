@@ -9,6 +9,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import EditStory from './pages/editStory/editStory.jsx'
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "addStory",
     element: <AddStory />,
+  },
+  {
+    path: "editStory",
+    element: <EditStory />,
   },
   {
     path: "addChapter",

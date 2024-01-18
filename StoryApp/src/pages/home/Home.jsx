@@ -42,7 +42,7 @@ function Home() {
                             <td>{story.category}</td>
                             <td>{story.tags}</td>
                             <td>{story.status}</td>
-                            <td><button>Edit</button><button>Del</button></td>
+                            <td><Link to={`/editStory`} state={{ story: story }} className='nav-link'>Edit</Link><button>Del</button></td>
                             </tr>
                         )
                     })}
