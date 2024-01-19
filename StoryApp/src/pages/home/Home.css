@@ -39,3 +39,7 @@ table {
   .nav-link:hover {
     background-color: #0056b3;
   }
+
+  .add-story{
+    margin-left: 10px;
+  }
